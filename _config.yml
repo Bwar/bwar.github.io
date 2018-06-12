@@ -1,1 +1,34 @@
-theme: jekyll-theme-leap-day
+# ----------- CONFIGURABLE START -----------
+title:            "Bwar|Nebula|C++|独立开发者|jekyll blog|GitHub blog"
+description:      "C++独立开发者|欢迎来到 Bwar「空间」。"
+url:              https://bwar.github.io 
+signoff:          "Bwar" 
+#google_analytics: UA-101222464-1
+share:            true 
+gems: [jekyll-paginate]
+links:
+  - name:         首页
+    url:          /
+    external:     false
+  - name:         项目
+    url:          /project
+    external:     false
+  - name:         文章
+    url:          /article
+    external:     false
+  - name:         相册
+    url:          /image
+    external:     false
+  - name:         留言
+    url:          /comment
+    external:     false
+  - name:         关于
+    url:          /about
+    external:     false
+# ------------ CONFIGURABLE END ------------
+
+permalink:        /:categories/:title.html
+permalink: /:year/:month/:day/:title.html
+defaults:
+  - values:
+      layout: "default"
