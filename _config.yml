@@ -35,3 +35,5 @@ permalink: /:year/:month/:day/:title.html
 defaults:
   - values:
       layout: "default"
+
+theme: jekyll-theme-cayman
