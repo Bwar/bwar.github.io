@@ -5,6 +5,7 @@ signoff:          "Bwar"
 facebook_appid:   #bwar
 #google_analytics: UA-101222464-1
 share:            true 
+title: Bwar的技术博客
 # 分页
 paginate: 15
 paginate_path: "bwarpage:num"
