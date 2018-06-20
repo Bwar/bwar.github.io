@@ -5,7 +5,7 @@ home: true
 category: project
 title:  CJsonObject：简单轻量易用的C++JSON库
 date:   2018-06-18 17:47:53
-background-image: ../style/images/logo-CJsonObject.png
+background-image: ../style/images/2018-06/bg-CJsonObject.png
 tags:
 - home
 - CJsonObject
