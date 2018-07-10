@@ -24,6 +24,7 @@ nebio相关配置信息存储。
 | app_name | varchar(10) | | 应用名称 | 官网 |
 | create_time | timestamp | | 创建时间 | 2018-07-08 14:20:00 |
 | update_time | timestamp | | 更新时间 | 2018-07-09 20:10:00 |
+
 <br/>
 
 ### 1.2 tb_event 事件配置表
@@ -38,6 +39,7 @@ nebio相关配置信息存储。
 | event_type | varchar(16) | | 事件类型 | page |
 | create_time | timestamp | | 创建时间 | 2018-07-08 14:20:00 |
 | update_time | timestamp | | 更新时间 | 2018-07-09 20:10:00 |
+
 <br/>
 
 ### 1.3 tb_session_interval 会话时长区间配置表
@@ -73,6 +75,7 @@ nebio相关统计结果信息存储。
 | pv | int(11) unsigned | | 次数 | 65839 |
 | vv | int(11) unsigned | | 会话数 | 17630 |
 | session_len | bigint(20) unsigned | | 总会话时长(秒) | 39583950894 |
+
 <br/>
 
 
@@ -88,6 +91,7 @@ nebio相关统计结果信息存储。
 | uv | int(11) unsigned | | 用户数 | 5896 |
 | pv | int(11) unsigned | | 次数 | 65839 |
 | vv | int(11) unsigned | | 会话数 | 17630 |
+
 <br/>
 
 ### 2.3 tb_event_stat 事件统计结果表
@@ -105,6 +109,7 @@ nebio相关统计结果信息存储。
 | vv | int(11) unsigned | | 会话数 | 17630 |
 | iv | int(11) unsigned | | 独立IP数 | 5379 |
 | event_length | bigint(20) unsigned | | 事件时长 | 39583950893 |
+
 <br/>
 
 ### 2.4 tb_page_stat 页面统计结果表
@@ -123,6 +128,7 @@ nebio相关统计结果信息存储。
 | online_time | bigint(20) unsigned | | 页面停留时长(秒) | 9588323 |
 | exit_vv | int(11) unsigned | | 退出数(查看该页面后退出) | 17630 |
 | bounce_vv | int(11) unsigned | | 跳出数(只查看该单一页面后退出) | 657 |
+
 <br/>
 
 
@@ -138,6 +144,7 @@ nebio相关统计结果信息存储。
 | next_page | varchar(128) | PRI | 下一个页面 | about |
 | vv | int(11) unsigned | | 用户数 | 5896 |
 | pv | int(11) unsigned | | 次数 | 65839 |
+
 <br/>
 
 
