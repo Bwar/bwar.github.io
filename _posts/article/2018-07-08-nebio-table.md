@@ -9,7 +9,6 @@ tags:
 - analyse
 ---
 
-
 # Nebio统计数据库表结构说明
 
 ## 1. db_nebio_conf 配置库
@@ -58,6 +57,7 @@ nebio相关配置信息存储。
 50   [50, 200)<br/>
 200   [200, 1000)<br/>
 1000   [1000, )<br/>
+
 <br/>
 
 ## 2. db_nebio_result 统计结果库
@@ -87,7 +87,7 @@ nebio相关统计结果信息存储。
 | stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
 | app_id | int(11) unsigned | PRI | 应用ID | 100001 |
 | channel | varchar(32) | PRI | 来源渠道 | baidu |
-| seg | smallint(6) unsigned | 时长区间 | 10 |
+| seg | smallint(6) unsigned | PRI | 时长区间 | 10 |
 | uv | int(11) unsigned | | 用户数 | 5896 |
 | pv | int(11) unsigned | | 次数 | 65839 |
 | vv | int(11) unsigned | | 会话数 | 17630 |
@@ -120,7 +120,7 @@ nebio相关统计结果信息存储。
 | stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
 | app_id | int(11) unsigned | PRI | 应用ID | 100001 |
 | channel | varchar(32) | PRI | 来源渠道 | baidu |
-| page | varchar(128) | PRI | 事件ID | home_page |
+| page | varchar(128) | PRI | 页面 | home_page |
 | uv | int(11) unsigned | | 用户数 | 5896 |
 | pv | int(11) unsigned | | 次数 | 65839 |
 | vv | int(11) unsigned | | 会话数 | 17630 |
