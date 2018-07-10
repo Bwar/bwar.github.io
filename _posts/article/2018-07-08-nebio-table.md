@@ -10,10 +10,11 @@ tags:
 ---
 
 
+# Nebio统计数据库表结构说明
 
-## db_nebio_conf 配置库
+## 1. db_nebio_conf 配置库
 nebio相关配置信息存储。
-### tb_app 应用配置表
+### 1.1 tb_app 应用配置表
 &emsp;&emsp;配置应用信息。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -23,9 +24,9 @@ nebio相关配置信息存储。
 | app_name | varchar(10) | | 应用名称 | 官网 |
 | create_time | timestamp | | 创建时间 | 2018-07-08 14:20:00 |
 | update_time | timestamp | | 更新时间 | 2018-07-09 20:10:00 |
+<br/>
 
-
-### tb_event 事件配置表
+### 1.2 tb_event 事件配置表
 &emsp;&emsp;配置事件信息。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -37,9 +38,9 @@ nebio相关配置信息存储。
 | event_type | varchar(16) | | 事件类型 | page |
 | create_time | timestamp | | 创建时间 | 2018-07-08 14:20:00 |
 | update_time | timestamp | | 更新时间 | 2018-07-09 20:10:00 |
+<br/>
 
-
-### tb_session_interval 会话时长区间配置表
+### 1.3 tb_session_interval 会话时长区间配置表
 &emsp;&emsp;按会话时长配置区间间隔信息，用于统计不同区间的会话数量。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -48,7 +49,6 @@ nebio相关配置信息存储。
 | low | int(11) unsigned | PRI | 区间起始值 | 0 |
 | show | varchar(32) | | 区间展示 | [0, 5) |
 
-
 配置示例：<br/>
 0   [0, 5)<br/>
 5   [5, 20)<br/>
@@ -56,24 +56,89 @@ nebio相关配置信息存储。
 50   [50, 200)<br/>
 200   [200, 1000)<br/>
 1000   [1000, )<br/>
+<br/>
 
-
-## db_nebio_result 统计结果库
+## 2. db_nebio_result 统计结果库
 nebio相关统计结果信息存储。
-### tb_event_stat 事件统计结果表
+### 2.1 tb_user_stat 用户统计结果表
+&emsp;&emsp;存储用户统计结果数据。
+
+| 字段名  | 类型  | 键 | 字段描述  | 示例
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
+| app_id | int(11) unsigned | PRI | 应用ID | 100001 |
+| channel | varchar(32) | PRI | 来源渠道 | baidu |
+| user_type | tinyint(4) unsigned | PRI | 用户类型：0 未定义，1 活跃， 2 新增，3 已注册，4 访客 | 1 |
+| uv | int(11) unsigned | | 用户数 | 5896 |
+| pv | int(11) unsigned | | 次数 | 65839 |
+| vv | int(11) unsigned | | 会话数 | 17630 |
+| session_len | bigint(20) unsigned | | 总会话时长(秒) | 39583950894 |
+<br/>
+
+
+### 2.2 tb_session_stat 会话区间分布统计结果表
+&emsp;&emsp;存储会话区间分布统计结果数据。
+
+| 字段名  | 类型  | 键 | 字段描述  | 示例
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
+| app_id | int(11) unsigned | PRI | 应用ID | 100001 |
+| channel | varchar(32) | PRI | 来源渠道 | baidu |
+| seg | smallint(6) unsigned | 时长区间 | 10 |
+| uv | int(11) unsigned | | 用户数 | 5896 |
+| pv | int(11) unsigned | | 次数 | 65839 |
+| vv | int(11) unsigned | | 会话数 | 17630 |
+<br/>
+
+### 2.3 tb_event_stat 事件统计结果表
 &emsp;&emsp;存储事件统计结果数据。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-| stat_date | date | | 统计目标日期 | 2018-07-08 |
+| stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
 | app_id | int(11) unsigned | PRI | 应用ID | 100001 |
-| event_id | varchar(64) | PRI | 事件ID | home_page |
 | channel | varchar(32) | PRI | 来源渠道 | baidu |
-| tag | varchar(32) | PRI | 标签 | ?ADTAG=ativite |
-| pv | int(11) unsigned | | 次数 | 65839 |
+| event_id | varchar(64) | PRI | 事件ID | home_page |
+| tag | varchar(32) | PRI | 标签 | ?ADTAG=ativity |
 | uv | int(11) unsigned | | 用户数 | 5896 |
+| pv | int(11) unsigned | | 次数 | 65839 |
 | vv | int(11) unsigned | | 会话数 | 17630 |
 | iv | int(11) unsigned | | 独立IP数 | 5379 |
 | event_length | bigint(20) unsigned | | 事件时长 | 39583950893 |
+<br/>
+
+### 2.4 tb_page_stat 页面统计结果表
+&emsp;&emsp;存储页面统计结果数据。
+
+| 字段名  | 类型  | 键 | 字段描述  | 示例
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
+| app_id | int(11) unsigned | PRI | 应用ID | 100001 |
+| channel | varchar(32) | PRI | 来源渠道 | baidu |
+| page | varchar(128) | PRI | 事件ID | home_page |
+| uv | int(11) unsigned | | 用户数 | 5896 |
+| pv | int(11) unsigned | | 次数 | 65839 |
+| vv | int(11) unsigned | | 会话数 | 17630 |
+| iv | int(11) unsigned | | 独立IP数 | 5379 |
+| online_time | bigint(20) unsigned | | 页面停留时长(秒) | 9588323 |
+| exit_vv | int(11) unsigned | | 退出数(查看该页面后退出) | 17630 |
+| bounce_vv | int(11) unsigned | | 跳出数(只查看该单一页面后退出) | 657 |
+<br/>
+
+
+### 2.5 tb_page_route_stat 页面路径统计结果表
+&emsp;&emsp;存储页面路径统计结果数据。
+
+| 字段名  | 类型  | 键 | 字段描述  | 示例
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
+| app_id | int(11) unsigned | PRI | 应用ID | 100001 |
+| channel | varchar(32) | PRI | 来源渠道 | baidu |
+| page | varchar(128) | PRI | 页面 | home_page |
+| next_page | varchar(128) | PRI | 下一个页面 | about |
+| vv | int(11) unsigned | | 用户数 | 5896 |
+| pv | int(11) unsigned | | 次数 | 65839 |
+<br/>
+
 
 
