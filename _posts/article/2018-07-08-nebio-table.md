@@ -9,11 +9,9 @@ tags:
 - analyse
 ---
 
-# Nebio统计数据库表结构说明
-
-## 1. db_nebio_conf 配置库
+## db_nebio_conf 配置库
 nebio相关配置信息存储。
-### 1.1 tb_app 应用配置表
+### tb_app 应用配置表
 &emsp;&emsp;配置应用信息。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -26,7 +24,7 @@ nebio相关配置信息存储。
 
 <br/>
 
-### 1.2 tb_event 事件配置表
+### tb_event 事件配置表
 &emsp;&emsp;配置事件信息。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -41,7 +39,21 @@ nebio相关配置信息存储。
 
 <br/>
 
-### 1.3 tb_session_interval 会话时长区间配置表
+### tb_page 页面名称配置表
+&emsp;&emsp;配置页面信息。
+
+| 字段名  | 类型  | 键 | 字段描述  | 示例
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| app_id | int(11) unsigned | PRI | 应用ID | 100001 |
+| page | varchar(128) | PRI | 页面路径 | home_page |
+| page_name | varchar(16) | | 页面名称 | 首页 |
+| page_desc | varchar(64) | | 页面描述 | 官网首页 |
+| create_time | timestamp | | 创建时间 | 2018-07-08 14:20:00 |
+| update_time | timestamp | | 更新时间 | 2018-07-09 20:10:00 |
+
+<br/>
+
+### tb_session_interval 会话时长区间配置表
 &emsp;&emsp;按会话时长配置区间间隔信息，用于统计不同区间的会话数量。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -60,9 +72,27 @@ nebio相关配置信息存储。
 
 <br/>
 
-## 2. db_nebio_result 统计结果库
+### tb_event_funnel 事件漏斗配置表
+&emsp;&emsp;配置事件漏斗。
+
+| 字段名  | 类型  | 键 | 字段描述  | 示例
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| app_id | int(11) unsigned | PRI | 应用ID | 100001 |
+| funnel_id | smallint(6) unsigned | PRI | 漏斗ID | 1001 |
+| activity | tinyint(1) unsigned | | 是否启用：0 未启用，1 启用 | 1 |
+| funnel_name | varchar(16) | | 漏斗名称 | 注册转化 |
+| funnel_desc | varchar(64) | | 漏斗描述 | 注册转化漏斗 |
+| funnel_events | JSON | | 漏斗事件(JSON数组) | ["home", "register_button", "name_input", "passwd_input", "passwd_comfirm", "register_success", "login"] |
+| create_time | timestamp | | 创建时间 | 2018-07-08 14:20:00 |
+| update_time | timestamp | | 更新时间 | 2018-07-09 20:10:00 |
+
+
+
+<br/>
+
+## db_nebio_result 统计结果库
 nebio相关统计结果信息存储。
-### 2.1 tb_user_stat 用户统计结果表
+### tb_user_stat 用户统计结果表
 &emsp;&emsp;存储用户统计结果数据。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -79,7 +109,7 @@ nebio相关统计结果信息存储。
 <br/>
 
 
-### 2.2 tb_session_stat 会话区间分布统计结果表
+### tb_session_stat 会话区间分布统计结果表
 &emsp;&emsp;存储会话区间分布统计结果数据。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -94,7 +124,7 @@ nebio相关统计结果信息存储。
 
 <br/>
 
-### 2.3 tb_event_stat 事件统计结果表
+### tb_event_stat 事件统计结果表
 &emsp;&emsp;存储事件统计结果数据。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -112,7 +142,7 @@ nebio相关统计结果信息存储。
 
 <br/>
 
-### 2.4 tb_page_stat 页面统计结果表
+### tb_page_stat 页面统计结果表
 &emsp;&emsp;存储页面统计结果数据。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -132,7 +162,7 @@ nebio相关统计结果信息存储。
 <br/>
 
 
-### 2.5 tb_page_route_stat 页面路径统计结果表
+### tb_page_route_stat 页面路径统计结果表
 &emsp;&emsp;存储页面路径统计结果数据。
 
 | 字段名  | 类型  | 键 | 字段描述  | 示例
@@ -147,5 +177,20 @@ nebio相关统计结果信息存储。
 
 <br/>
 
+### tb_event_funnel 事件漏斗统计结果表
+&emsp;&emsp;存储事件漏斗统计结果。
+
+| 字段名  | 类型  | 键 | 字段描述  | 示例
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
+| app_id | int(11) unsigned | PRI | 应用ID | 100001 |
+| channel | varchar(32) | PRI | 来源渠道 | baidu |
+| funnel_id | smallint(6) unsigned | PRI | 漏斗ID | 1001 |
+| step | tinyint(4) unsigned | PRI | 漏斗节点序号 | 3 |
+| event_id | varchar(64) | PRI | 事件ID | home_page |
+| uv | int(11) unsigned | | 用户数 | 5896 |
+| pv | int(11) unsigned | | 次数 | 65839 |
+
+<br/>
 
 
