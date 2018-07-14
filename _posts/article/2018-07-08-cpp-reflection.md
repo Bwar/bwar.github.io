@@ -286,6 +286,13 @@ public:
 
 ```
 
+&emsp;&emsp;如果一个类有多个构造函数怎么办？容易，增加一个继承基类：
+
+```
+// CmdHello有两个构造函数(一个构造函数无参，另一个构造函数带有一个int32型的参数)的情况下，继承方式如
+class CmdHello: public neb::Cmd, public neb::DynamicCreator<CmdHello, int32>, public neb::DynamicCreator<CmdHello>
+```
+
 &emsp;&emsp;再看看上面的反射机制是[怎么调用](https://github.com/Bwar/Nebula/blob/master/src/labor/WorkerImpl.inl)的：
 
 ``` C++
