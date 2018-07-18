@@ -12,7 +12,7 @@ tags:
 
 &emsp;&emsp;传送文件描述符是高并发网络服务编程的一种常见实现方式。[Nebula](https://github.com/Bwar/Nebula) 高性能通用网络框架即采用了UNIX域套接字传递文件描述符设计和实现。本文详细说明一下传送文件描述符的应用。
 
-### 1. TCP服务器程序设计范式
+### TCP服务器程序设计范式
 &emsp;&emsp;开发一个服务器程序，有较多的的程序设计范式可供选择，不同范式有其自身的特点和实用范围，明了不同范式的特性有助于我们服务器程序的开发。常见的TCP服务器程序设计范式有以下几种：
 * __迭代服务器__
 * __并发服务器，每个客户请求fork一个子进程__ 
@@ -30,7 +30,7 @@ tags:
 
 &emsp;&emsp;一般来讲，所有子进程或线程都调用accept要比父进程或主线程调用accept后将描述字传递个子进程或线程来得快且简单。
 
-### 2. [Nebula](https://github.com/Bwar/Nebula) 为什么采用传递文件描述符方式？
+### [Nebula](https://github.com/Bwar/Nebula) 为什么采用传递文件描述符方式？
 &emsp;&emsp;Nebula框架是预先创建多进程，由Manager主进程accept后传递文件描述符到Worker子进程的服务模型（[Nebula进程模型](https://github.com/Bwar/Nebula/wiki/%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86)）。为什么不采用像nginx那样多线程由子线程使用互斥锁上锁保护accept的服务模型？而且这种服务模型的实现比传递文件描述符来得还简单一些。
 
 &emsp;&emsp;Nebula框架采用无锁设计，进程之前完全不共享数据，不存在需要互斥访问的地方。没错，会存在数据多副本问题，但这些多副本往往只是些配置数据，占用不了太大内存，与加锁解锁带来的代码复杂度及锁开销相比这点内存代价更划算也更简单。
@@ -39,7 +39,7 @@ tags:
 
 &emsp;&emsp;决定Nebula采用传递文件描述符方式的最重要一点是：Nebula定位是高性能分布式服务集群解决方案的基础通信框架，其设计更多要为构建分布式服务集群而考虑。集群不同服务节点之间通过TCP通信，而所有逻辑都是Worker进程负责，这意味着节点之间通信需要指定到Worker进程，而如果采用子进程竞争accept的方式无法保证指定的子进程获得资源，那么第一个通信数据包将会路由错误。采用传递文件描述符方式可以很完美地解决这个问题，而且传递文件描述符也非常高效。
 
-### 3. 文件描述符传递函数和数据结构
+### 文件描述符传递函数和数据结构
 &emsp;&emsp;文件描述符传递通过调用sendmsg()函数发送，调用recvmsg()函数接收：
 
 ``` c
@@ -113,7 +113,7 @@ size_t CMSG_LEN(size_t length);
 unsigned char *CMSG_DATA(struct cmsghdr *cmsg);
 ```
 
-### 4. 文件描述符传递要点
+### 文件描述符传递要点
 &emsp;&emsp;sendmsg提供了可以传递控制信息的功能，要实现的传递描述符这一功能必须要用到这个控制信息。在msghdr变量的cmsghdr成员中，由控制头cmsg_level和cmsg_type来设置传递文件描述符这一属性，并将要传递的文件描述符作为数据部分，保存在cmsghdr变量的后面。这样就可以实现传递文件描述符这一功能，这种情况是不需要使用msg_iov来传递数据的。
 
 &emsp;&emsp;具体地说，为msghdr的成员msg_control分配一个cmsghdr的空间，将该cmsghdr结构的cmsg_level设置为SOL_SOCKET，cmsg_type设置为SCM_RIGHTS，并将要传递的文件描述符作为数据部分，调用sendmsg即可。其中SCM表示socket-level control message，SCM_RIGHTS表示我们要传递访问权限。
@@ -137,7 +137,7 @@ int socketpair(int d, int type, int protocol, int sv[2]);
 
 &emsp;&emsp;传入的参数sv为一个整型数组，有两个元素。当调用成功后，这个数组的两个元素即为2个文件描述符。一对连接起来的Unix匿名域套接字就建立起来了，它们就像一个全双工的管道，每一端都既可读也可写。
 
-### 5. Nebula框架中传递文件描述符的实现
+### Nebula框架中传递文件描述符的实现
 &emsp;&emsp;Nebula框架的文件描述符属于[SocketChannel](https://github.com/Bwar/Nebula/blob/master/src/channel/SocketChannel.hpp)的基本属性，文件描述符传递方法是SocketChannel的静态方法。
 
 文件描述符传递方法声明：
@@ -346,7 +346,7 @@ int iErrno = SocketChannel::RecvChannelFd(m_stWorkerInfo.iManagerDataFd, iAccept
 
 &emsp;&emsp;至此，Nebula框架的文件描述符传递分享完毕，下面再看看nginx中的文件描述符传递实现。
 
-### 6. Nginx文件描述符传递代码实现
+### Nginx文件描述符传递代码实现
 &emsp;&emsp;Nginx的文件描述符传递代码在os/unix/ngx_channel.c文件中。
 
 nginx中发送文件描述符代码：
