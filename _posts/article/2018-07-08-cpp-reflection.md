@@ -4,6 +4,7 @@ article: true
 category: C++
 title:  【Nebula系列】C++反射机制：可变参数模板实现C++反射
 date:   2018-07-08 20:38:53
+background-image: ../style/images/2018-06/bwar-article.png
 tags:
 - C++反射
 - reflection
@@ -271,7 +272,8 @@ typename DynamicCreator<T, Targs...>::Register DynamicCreator<T, Targs...>::m_oR
 // 类定义需要使用多重继承。
 // 第一重继承neb::Cmd是CmdHello的实际基类（neb::Cmd为Actor的派生类，Actor是什么在本节开始的描述中有说明）；
 // 第二重继承为通过类名动态创建实例的需要，与template<typename T, typename...Targs> class DynamicCreator定义对应着看就很容易明白第一个模板参数（CmdHello）为待动态创建的类名，其他参数为该类的构造函数参数。
-// 如果参数为某个类型的指针或引用，作为模板参数时应指定到类型。比如： 参数类型const std::string&只需在neb::DynamicCreator的模板参数里填std::string。
+// 如果参数为某个类型的引用，作为模板参数时应指定到类型。比如： 参数类型const std::string&只需在neb::DynamicCreator的模板参数里填std::string
+// 如果参数为某个类型的指针，作为模板参数时需指定为类型的指针。比如：参数类型const std::string*则需在neb::DynamicCreator的模板参数里填std::string*
 class CmdHello: public neb::Cmd, public neb::DynamicCreator<CmdHello, int32>
 {
 public:

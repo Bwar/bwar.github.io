@@ -4,6 +4,7 @@ article: true
 category: C++
 title:  通过UNIX域套接字传递文件描述符
 date:   2018-07-17 23:36:47
+background-image: ../style/images/2018-06/bwar-article.png
 tags:
 - Nebula系列
 ---

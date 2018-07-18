@@ -4,6 +4,7 @@ article: true
 category: data
 title:  Nebio：数据统计分析(二)—数据埋点统计库表结构
 date:   2018-07-08 14:47:38
+background-image: ../style/images/2018-06/bwar-article.png
 tags:
 - data
 - analyse

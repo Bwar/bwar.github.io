@@ -4,6 +4,7 @@ article: true
 category: git
 title:  git多个远程仓库
 date:   2018-07-12 23:45:27
+background-image: ../style/images/2018-06/bwar-article.png
 tags:
 - git
 ---
