@@ -2,11 +2,12 @@
 layout: blog
 article: true
 category: C++
-title:  C++反射机制：可变参数模板实现C++反射
+title:  【Nebula系列】C++反射机制：可变参数模板实现C++反射
 date:   2018-07-08 20:38:53
 tags:
 - C++反射
 - reflection
+- Nebula系列
 ---
 
 ### 概要
@@ -218,7 +219,7 @@ public:
         {
             char* szDemangleName = nullptr;
             std::string strTypeName;
-#ifdef __GUNC__
+#ifdef __GNUC__
             szDemangleName = abi::__cxa_demangle(typeid(T).name(), nullptr, nullptr, nullptr);
 #else
             // 注意：这里不同编译器typeid(T).name()返回的字符串不一样，需要针对编译器写对应的实现
@@ -423,7 +424,7 @@ public:
             std::cout << "DynamicCreator.Register construct" << std::endl;
             char* szDemangleName = nullptr;
             std::string strTypeName;
-#ifdef __GUNC__
+#ifdef __GNUC__
             szDemangleName = abi::__cxa_demangle(typeid(T).name(), nullptr, nullptr, nullptr);
 #else
             //in this format?:     szDemangleName =  typeid(T).name();
@@ -547,8 +548,9 @@ Create Step neb::Step with seq 1002
 I am Step
 ```
 
-&emsp;&emsp;完毕，周末花了6个小时才写完，找了个合适的时间发布出来。如果觉得这篇文章对你有用，如果觉得[Nebula](https://github.com/Bwar/Nebula)还可以，麻烦到[GitHub](https://github.com/Bwar/Nebula)上给个star，感谢。 Nebula不仅是一个框架，还提供了一系列基于这个框架的应用，目标是打造一个高性能分布式服务集群解决方案。
+&emsp;&emsp;完毕，周末花了6个小时才写完，找了个合适的时间发布出来。 
 
+&emsp;&emsp;__Nebula框架系列技术分享__ 之 《C++反射机制：可变参数模板实现C++反射》。 如果觉得这篇文章对你有用，如果觉得Nebula框架还可以，帮忙到Nebula的[__Github__](https://github.com/Bwar/Nebula)或[__码云__](https://gitee.com/Bwar/Nebula)给个star，谢谢。Nebula不仅是一个框架，还提供了一系列基于这个框架的应用，目标是打造一个高性能分布式服务集群解决方案。
 
 
 
