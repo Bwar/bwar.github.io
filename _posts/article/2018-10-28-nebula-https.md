@@ -1,3 +1,16 @@
+---
+layout: blog
+article: true
+category: C++
+title:  基于OpenSSL的HTTPS通信C++实现
+date:   2018-10-29 11:12:27
+background-image: ../style/images/2018-06/bwar-article.png
+tags:
+- https
+- ssl
+---
+
+
 &emsp;&emsp;HTTPS(全称：Hyper Text Transfer Protocol over Secure Socket Layer)，是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。[Nebula](https://github.com/Bwar/Nebula)是一个为开发者提供一个快速开发高并发网络服务程序或搭建高并发分布式服务集群的高性能事件驱动网络框架。Nebula作为通用网络框架提供HTTPS支持十分重要，Nebula既可用作https服务器，又可用作https客户端。本文将结合Nebula框架的https实现详细讲述基于openssl的SSL编程。如果觉得本文对你有用，帮忙到Nebula的[__Github__](https://github.com/Bwar/Nebula)或[__码云__](https://gitee.com/Bwar/Nebula)给个star，谢谢。Nebula不仅是一个框架，还提供了一系列基于这个框架的应用，目标是打造一个高性能分布式服务集群解决方案。Nebula的主要应用领域：即时通讯（成功应用于一款[IM](https://github.com/Bwar/Nebula/wiki/%E9%A6%96%E9%A1%B5)）、消息推送平台、数据实时分析计算([成功案例](https://github.com/Bwar/Nebio))等，Bwar还计划基于Nebula开发爬虫应用。
 
 ### SSL加密通信

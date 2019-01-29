@@ -1,3 +1,19 @@
+---
+layout: blog
+article: true
+category: C++
+title:  集群协调服务选举实现
+date:   2019-01-13 15:42:33
+background-image: ../style/images/2018-06/bwar-article.png
+tags:
+- ZooKeeper
+- 协调服务
+- Nebula
+- 选举
+- Paxos
+---
+
+
 &emsp;&emsp;一个分布式服务集群管理通常需要一个协调服务，提供服务注册、服务发现、配置管理、组服务等功能，而协调服务自身应是一个高可用的服务集群，ZooKeeper是广泛应用且众所周知的协调服务。协调服务自身的高可用需要选举算法来支撑，本文将讲述选举原理并以分布式服务集群[NebulaBootstrap](https://github.com/Bwar/NebulaBootstrap)的协调服务[NebulaBeacon](https://github.com/Bwar/NebulaBeacon)为例详细说明协调服务的选举实现。
 &emsp;&emsp;为什么要选NebulaBeacon来说明协调服务的选举实现？一方面是我没有读过Zookeeper的代码，更重要的另一方面是NebulaBeacon的选举实现只有两百多行代码，简单精炼，很容易讲清楚。基于高性能C++网络框架[Nebula](https://github.com/Bwar/Nebula)实现的分布式服务集群[NebulaBootstrap](https://github.com/Bwar/NebulaBootstrap)是一种用C++快速构建高性能分布式服务的解决方案。为什么要实现自己的协调服务而不直接用Zookeeper？想造个C++的轮子，整个集群都是C++服务，因为选了ZooKeeper而需要部署一套Java环境，配置也跟其他服务不是一个体系，实在不是一个好的选择。Spring Cloud有Eureka，NebulaBootstrap有NebulaBeacon，未来NebulaBootstrap会支持ZooKeeper，不过暂无时间表，还是首推NebulaBeacon。
 
