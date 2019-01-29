@@ -102,9 +102,11 @@ nebio相关统计结果信息存储。
 | app_id | int(11) unsigned | PRI | 应用ID | 100001 |
 | channel | varchar(32) | PRI | 来源渠道 | baidu |
 | user_type | tinyint(4) unsigned | PRI | 用户类型：0 未定义，1 活跃， 2 新增，3 已注册，4 访客 | 1 |
+| tag | varchar(32) | PRI | 标签 | ?ADTAG=ativity |
 | uv | int(11) unsigned | | 用户数 | 5896 |
 | pv | int(11) unsigned | | 次数 | 65839 |
 | vv | int(11) unsigned | | 会话数 | 17630 |
+| iv | int(11) unsigned | | 独立IP数 | 5379 |
 | session_len | bigint(20) unsigned | | 总会话时长(秒) | 39583950894 |
 
 <br/>
@@ -118,6 +120,7 @@ nebio相关统计结果信息存储。
 | stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
 | app_id | int(11) unsigned | PRI | 应用ID | 100001 |
 | channel | varchar(32) | PRI | 来源渠道 | baidu |
+| tag | varchar(32) | PRI | 标签 | ?ADTAG=ativity |
 | seg | smallint(6) unsigned | PRI | 时长区间 | 10 |
 | uv | int(11) unsigned | | 用户数 | 5896 |
 | pv | int(11) unsigned | | 次数 | 65839 |
@@ -151,6 +154,7 @@ nebio相关统计结果信息存储。
 | stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
 | app_id | int(11) unsigned | PRI | 应用ID | 100001 |
 | channel | varchar(32) | PRI | 来源渠道 | baidu |
+| tag | varchar(32) | PRI | 标签 | ?ADTAG=ativity |
 | page | varchar(128) | PRI | 页面 | home_page |
 | uv | int(11) unsigned | | 用户数 | 5896 |
 | pv | int(11) unsigned | | 次数 | 65839 |
@@ -171,6 +175,7 @@ nebio相关统计结果信息存储。
 | stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
 | app_id | int(11) unsigned | PRI | 应用ID | 100001 |
 | channel | varchar(32) | PRI | 来源渠道 | baidu |
+| tag | varchar(32) | PRI | 标签 | ?ADTAG=ativity |
 | page | varchar(128) | PRI | 页面 | home_page |
 | next_page | varchar(128) | PRI | 下一个页面 | about |
 | vv | int(11) unsigned | | 用户数 | 5896 |
@@ -186,6 +191,7 @@ nebio相关统计结果信息存储。
 | stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
 | app_id | int(11) unsigned | PRI | 应用ID | 100001 |
 | channel | varchar(32) | PRI | 来源渠道 | baidu |
+| tag | varchar(32) | PRI | 标签 | ?ADTAG=ativity |
 | funnel_id | smallint(6) unsigned | PRI | 漏斗ID | 1001 |
 | step | tinyint(4) unsigned | PRI | 漏斗节点序号 | 3 |
 | event_id | varchar(64) | PRI | 事件ID | home_page |
@@ -193,5 +199,19 @@ nebio相关统计结果信息存储。
 | pv | int(11) unsigned | | 次数 | 65839 |
 
 <br/>
+
+### tb_visit_time 分时访问统计结果表
+&emsp;&emsp;存储用户分时访问情况分布统计结果数据。
+
+| 字段名  | 类型  | 键 | 字段描述  | 示例
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| stat_date | date | PRI | 统计目标日期 | 2018-07-08 |
+| app_id | int(11) unsigned | PRI | 应用ID | 100001 |
+| channel | varchar(32) | PRI | 来源渠道 | baidu |
+| tag | varchar(32) | PRI | 标签 | ?ADTAG=ativity |
+| hour | smallint(6) unsigned | PRI | 小时区间 | 10 |
+| uv | int(11) unsigned | | 用户数 | 5896 |
+| pv | int(11) unsigned | | 次数 | 65839 |
+| vv | int(11) unsigned | | 会话数 | 17630 |
 
 
