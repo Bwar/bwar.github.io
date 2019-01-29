@@ -16,11 +16,11 @@ tags:
 ### SSL加密通信
 &emsp;&emsp;HTTPS通信是在TCP通信层与HTTP应用层之间增加了SSL层，如果应用层不是HTTP协议也是可以使用SSL加密通信的，比如WebSocket协议WS的加上SSL层之后的WSS。Nebula框架可以通过更换Codec达到不修改代码变更通讯协议目的，Nebula增加SSL支持后，所有Nebula支持的通讯协议都有了SSL加密通讯支持，基于Nebula的业务代码无须做任何修改。
 
-![https_communication](../../style/images/2019/https_communication.png)
+![https_communication]({{site.url}}/style/images/2019/https_communication.png)
 
 &emsp;&emsp;Socket连接建立后的SSL连接建立过程：
 
-![ssl_communication](../../style/images/2019/SSL.gif)
+![ssl_communication]({{site.url}}/style/images/2019/SSL.gif)
 
 ### OpenSSL API
 &emsp;&emsp;OpenSSL的API很多，但并不是都会被使用到，如果需要查看某个API的详细使用方法可以阅读[API文档](https://www.openssl.org/docs/man1.1.0/ssl/)。
@@ -169,7 +169,7 @@ private:
 
 &emsp;&emsp;网上的大部分openssl例子程序是按顺序调用openssl函数简单实现同步ssl通信，在非阻塞IO应用中，ssl通信要复杂许多。SocketChannelSslImpl实现的是非阻塞的ssl通信，从该类的实现上看整个通信过程并非完全线性的。下面的SSL通信图更清晰地说明了Nebula框架中SSL通信是如何实现的：
 
-![Nebula_ssl](../../style/images/2019/SSL_communication.jpg)
+![Nebula_ssl]({{site.url}}/style/images/2019/SSL_communication.jpg)
 
 &emsp;&emsp;SocketChannelSslImpl中的静态方法在进程生命期内只需调用一次，也可以理解成SSL_CTX_new()、SSL_CTX_free()等方法只需调用一次。更进一步理解SSL_CTX结构体在进程内只需要创建一次（在Nebula中分别为Server和Client各创建一个）就可以为所有SSL连接所用；当然，为每个SSL连接创建独立的SSL_CTX也没问题（Nebula 0.4中实测过为每个Client创建独立的SSL_CTX），单一般不这么做，因为这样会消耗更多的内存资源，并且效率也会更低。
 
@@ -187,7 +187,7 @@ done
 
 &emsp;&emsp;测试方法如下图：
 
-![ssl_test](../../style/images/2019/https_test.jpg)
+![ssl_test]({{site.url}}/style/images/2019/https_test.jpg)
 
 &emsp;&emsp;查看资源使用情况，SSL Server端的内存使用一直在增长，疑似有内存泄漏，不过pmap -d查看某一项anon内存达到近18MB时不再增长，说明可能不是内存泄漏，只是部分内存被openssl当作cache使用了。这个问题网上没找到解决办法。从struct ssl_ctx_st结构体定义发现端倪，再从nginx源码中发现了SSL_CTX_remove_session()，于是在SSL_free()之前加上SSL_CTX_remove_session()。session复用可以提高SSL通信效率，不过Nebula暂时不需要。
 
